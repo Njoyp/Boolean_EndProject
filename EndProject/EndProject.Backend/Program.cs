@@ -1,11 +1,29 @@
+using EndProject.Backend.EndPoint;
+using EndProject.Backend.Repository;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Recipe Randomizer",
+        Description = "This application generates random recipes based of the amount the user asks for.",
+        Contact = new OpenApiContact
+        {
+            Name = "Nikita Pieters",
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -20,6 +38,9 @@ if (app.Environment.IsDevelopment())
                    .SetIsOriginAllowed(origin => true) // allow any origin
                    .AllowCredentials()); // allow credentials
 }
+
+app.ConfigureIngredientApi();
+app.ConfigureRecipeApi();
 
 app.UseHttpsRedirection();
 
