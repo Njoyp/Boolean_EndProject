@@ -12,12 +12,12 @@ namespace EndProject.Backend.Repository
          * update
          * delete
          */
-        Recepten AddRecipe (Recepten recept);
-        IEnumerable<Recepten> GetAllRecipes();
-        IEnumerable<Recepten> GetRandomRecipes(int count);
-        Recepten GetOneRecipe(int id);
-        Recepten UpdateRecipe (Recepten recept);
-        Recepten DeleteRecipe(int id);
+        Recept AddRecipe (Recept recept);
+        IEnumerable<Recept> GetAllRecipes();
+        IEnumerable<Recept> GetRandomRecipes(int count);
+        Recept GetOneRecipe(int id);
+        Recept UpdateRecipe (Recept recept);
+        Recept DeleteRecipe(int id);
 
         /*
          * Ingredients
@@ -27,10 +27,10 @@ namespace EndProject.Backend.Repository
          * update
          * delete
          */
-        Ingredienten AddIngredient (Ingredienten ingredient);
-        IEnumerable<Ingredienten> GetAllIngredients();
-        Ingredienten GetOneIngredient(int id);
-        Ingredienten UpdateIngredient(Ingredienten ingredient);
-        Ingredienten DeleteIngredient(int id);
+        Ingredient AddIngredient (Ingredient ingredient);
+        IEnumerable<Ingredient> GetAllIngredients();
+        Ingredient GetOneIngredient(int id);
+        Ingredient UpdateIngredient(Ingredient ingredient);
+        Ingredient DeleteIngredient(int id);
     }
 }

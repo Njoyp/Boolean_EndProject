@@ -18,12 +18,12 @@ namespace EndProject.Backend.EndPoint
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static async Task<IResult> PostRecipe(Recepten recipe, IRecipeRepository repository)
+        private static async Task<IResult> PostRecipe(Recept recipe, IRecipeRepository repository)
         {
             try
             {
                 var r = repository.AddRecipe(recipe);
-                return r != null ? Results.Created($"https://localhost:7195/Recepten/{recipe.id}", r) : Results.BadRequest("Couldn't create a new recipe, please check your input.");
+                return r != null ? Results.Created($"https://localhost:7195/Recepten/{recipe.Receptid}", r) : Results.BadRequest("Couldn't create a new recipe, please check your input.");
             }
             catch (Exception ex)
             {
@@ -68,7 +68,7 @@ namespace EndProject.Backend.EndPoint
                 return await Task.Run(() =>
                 {
                     var recipe = repository.GetOneRecipe(id);
-                    if (recipe == null) return Results.NotFound();
+                    if (recipe == null) return Results.NotFound("Couldn't find this recipe");
                     return Results.Ok(recipe);
                 });
             }
@@ -80,12 +80,12 @@ namespace EndProject.Backend.EndPoint
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static async Task<IResult> UpdateRecipe(Recepten recipe, IRecipeRepository repository)
+        private static async Task<IResult> UpdateRecipe(Recept recipe, IRecipeRepository repository)
         {
             try
             {
                 var r = repository.UpdateRecipe(recipe);
-                return r != null ? Results.Created($"https://localhost:7195/Ingredienten/{recipe.id}", r) : Results.BadRequest("Couldn't update recipe, please check the input fields.");
+                return r != null ? Results.Created($"https://localhost:7195/Ingredienten/{recipe.Receptid}", r) : Results.BadRequest("Couldn't update recipe, please check the input fields.");
             }
             catch (Exception ex)
             {

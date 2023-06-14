@@ -17,12 +17,12 @@ namespace EndProject.Backend.EndPoint
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static async Task<IResult> PostIngredient(Ingredienten ingredient, IRecipeRepository repository)
+        private static async Task<IResult> PostIngredient(Ingredient ingredient, IRecipeRepository repository)
         {
             try
             {
                 var i = repository.AddIngredient(ingredient);
-                return i != null ? Results.Created($"https://localhost:7195/Ingredienten/{ingredient.id}", i) : Results.BadRequest("Couldn't create a new ingredient, please check your input.");
+                return i != null ? Results.Created($"https://localhost:7195/Ingredienten/{ingredient.Id}", i) : Results.BadRequest("Couldn't create a new ingredient, please check your input.");
             }
             catch(Exception ex)
             {
@@ -64,12 +64,12 @@ namespace EndProject.Backend.EndPoint
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private static async Task<IResult> UpdateIngredient(Ingredienten ingredient, IRecipeRepository repository)
+        private static async Task<IResult> UpdateIngredient(Ingredient ingredient, IRecipeRepository repository)
         {
             try
             {
                 var i = repository.UpdateIngredient(ingredient);
-                return i != null ? Results.Created($"https://localhost:7195/Ingredienten/{ingredient.id}", i) : Results.BadRequest("Couldn't update ingredient, please check the input fields.");
+                return i != null ? Results.Created($"https://localhost:7195/Ingredienten/{ingredient.Id}", i) : Results.BadRequest("Couldn't update ingredient, please check the input fields.");
             }
             catch (Exception ex)
             {

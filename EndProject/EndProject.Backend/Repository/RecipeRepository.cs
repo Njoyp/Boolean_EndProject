@@ -6,34 +6,34 @@ namespace EndProject.Backend.Repository
 {
     public class RecipeRepository : IRecipeRepository
     {
-        public Ingredienten AddIngredient(Ingredienten ingredient)
+        public Ingredient AddIngredient(Ingredient ingredient)
         {
             using (var db = new RecipeContext())
             {
-                db.Ingredients.Add(ingredient);
+                db.Ingredienten.Add(ingredient);
                 db.SaveChanges();
                 return ingredient;
             }
         }
 
-        public Recepten AddRecipe(Recepten recept) // also want to add the ingredients belonging to this recept
+        public Recept AddRecipe(Recept recept) // also want to add the ingredients belonging to this recept
         {
            using (var db = new RecipeContext())
             {
-                db.Recipes.Add(recept);
+                db.Recepten.Add(recept);
                 db.SaveChanges();
                 return recept;
             }
         }
 
-        public Ingredienten DeleteIngredient(int id)
+        public Ingredient DeleteIngredient(int id)
         {
             using (var db = new RecipeContext())
             {
-                var ingredient = db.Ingredients.Find(id);
+                var ingredient = db.Ingredienten.Find(id);
                 if (ingredient != null)
                 {
-                    ingredient.verwijderd = DateTime.UtcNow;
+                    ingredient.Verwijderd = DateTime.UtcNow;
 //                    db.Ingredients.Remove(ingredient);
                     db.SaveChanges();
                     return ingredient;
@@ -42,14 +42,16 @@ namespace EndProject.Backend.Repository
             }
         }
 
-        public Recepten DeleteRecipe(int id) // when deleting a recipe also delete ingredient with that recipe_id
+        public Recept DeleteRecipe(int id) // when deleting a recipe also delete ingredient with that recipe_id
         {
             using (var db = new RecipeContext())
             {
-                var recipe = db.Recipes.Find(id);
+                var results = db.Recepten.Include(r => r.ingredienten).ToList();
+                var recipe = results.SingleOrDefault(i => i.Receptid == id);
                 if (recipe != null)
                 {
-                    recipe.verwijderd = DateTime.UtcNow;
+                    recipe.Verwijderd = DateTime.UtcNow;
+                    recipe.ingredienten.ToList().ForEach(i => { i.Verwijderd = DateTime.UtcNow; });
                     db.SaveChanges(); 
                     return recipe;
                 }
@@ -57,45 +59,76 @@ namespace EndProject.Backend.Repository
             }
         }
 
-        public IEnumerable<Ingredienten> GetAllIngredients() // except for the ones where verwijderd != null
-        {
-            using (var db = new RecipeContext()) 
-            {
-                return db.Ingredients.ToList();
-            } ;
-        }
-
-        public IEnumerable<Recepten> GetAllRecipes() // except for the ones where verwijderd != null
+        public IEnumerable<Ingredient> GetAllIngredients() // except for the ones where verwijderd != null
         {
             using (var db = new RecipeContext())
             {
-                return db.Recipes.Include(r => r.ingredienten).ToList();
+                /*var result =*/  return db.Ingredienten.ToList();
+                // for each item in result check if verwijderd == null then return that item otherwise don't include in the return list
+
+               /*
+                    if (result != null)
+                    {
+                        if (result.Verwijderd == null) { return result; }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+               */
             }
         }
 
-        public Ingredienten GetOneIngredient(int id) // except for when verwijderd != null
+        public IEnumerable<Recept> GetAllRecipes() // except for the ones where verwijderd != null
         {
-            Ingredienten result;
             using (var db = new RecipeContext())
             {
-                result = db.Ingredients.Find(id);
+
+                return db.Recepten.Include(r => r.ingredienten).ToList();
+            }
+        }
+
+        public Ingredient GetOneIngredient(int id) // except for when verwijderd != null 
+        {
+            Ingredient result;
+            using (var db = new RecipeContext())
+            {
+                result = db.Ingredienten.Find(id);    
             }
             return result;
         }
 
-        public Recepten GetOneRecipe(int id) // including the ingredients
+        public Recept GetOneRecipe(int id) // including the ingredients
         {
-            Recepten result;
+            Recept result;
             using (var db = new RecipeContext())
             {
-                result = db.Recipes.Find(id);
+                var results = db.Recepten.Include(r => r.ingredienten).ToList(); ;
+                result = results.SingleOrDefault(i => i.Receptid == id);
             }
-            return result;
+            if (result != null)
+            {
+                if (result.Verwijderd == null) { return result; }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            //return result;
         }
 
-        public IEnumerable<Recepten> GetRandomRecipes(int count)
+        public IEnumerable<Recept> GetRandomRecipes(int count)
         {
-            List<Recepten> RandomRecipes = new List<Recepten>();
+            List<Recept> RandomRecipes = new List<Recept>();
             Random random = new Random();
             var r = this.GetAllRecipes().ToList();
             for (int i = 0; i < count; i++)
@@ -105,21 +138,21 @@ namespace EndProject.Backend.Repository
             return RandomRecipes;
         }
 
-        public Ingredienten UpdateIngredient(Ingredienten ingredient)
+        public Ingredient UpdateIngredient(Ingredient ingredient)
         {
             using (var db = new RecipeContext())
             {
-                db.Ingredients.Update(ingredient);
+                db.Ingredienten.Update(ingredient);
                 db.SaveChanges();
                 return ingredient;
             }
         }
 
-        public Recepten UpdateRecipe(Recepten recept)
+        public Recept UpdateRecipe(Recept recept)
         {
             using (var db = new RecipeContext())
             {
-                db.Recipes.Update(recept);
+                db.Recepten.Update(recept);
                 db.SaveChanges();
                 return recept;
             }

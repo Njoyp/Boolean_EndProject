@@ -17,7 +17,7 @@ namespace EndProject.Backend.Data
             optionsBuilder.UseNpgsql(GetConnectionString());
         }
 
-        public DbSet<Recepten> Recipes { get; set; }
-        public DbSet<Ingredienten> Ingredients { get; set;}
+        public DbSet<Recept> Recepten { get; set; }
+        public DbSet<Ingredient> Ingredienten { get; set;}
     }
 }
