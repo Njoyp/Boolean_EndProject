@@ -63,32 +63,15 @@ namespace EndProject.Backend.Repository
         {
             using (var db = new RecipeContext())
             {
-                /*var result =*/  return db.Ingredienten.ToList();
-                // for each item in result check if verwijderd == null then return that item otherwise don't include in the return list
-
-               /*
-                    if (result != null)
-                    {
-                        if (result.Verwijderd == null) { return result; }
-                        else
-                        {
-                            return null;
-                        }
-                    }
-                    else
-                    {
-                        return null;
-                    }
-               */
+                  return db.Ingredienten.ToList(); 
             }
         }
 
-        public IEnumerable<Recept> GetAllRecipes() // except for the ones where verwijderd != null
+        public IEnumerable<Recept> GetAllRecipes()
         {
             using (var db = new RecipeContext())
             {
-
-                return db.Recepten.Include(r => r.ingredienten).ToList();
+                return db.Recepten.Include(r => r.ingredienten).Where(r =>r.Verwijderd == null).ToList();
             }
         }
 
@@ -102,28 +85,15 @@ namespace EndProject.Backend.Repository
             return result;
         }
 
-        public Recept GetOneRecipe(int id) // including the ingredients
+        public Recept GetOneRecipe(int id) 
         {
             Recept result;
             using (var db = new RecipeContext())
             {
                 var results = db.Recepten.Include(r => r.ingredienten).ToList(); ;
-                result = results.SingleOrDefault(i => i.Receptid == id);
+                result = results.SingleOrDefault(i => i.Receptid == id && i.Verwijderd == null);
             }
-            if (result != null)
-            {
-                if (result.Verwijderd == null) { return result; }
-                else
-                {
-                    return null;
-                }
-            }
-            else
-            {
-                return null;
-            }
-
-            //return result;
+            return result;
         }
 
         public IEnumerable<Recept> GetRandomRecipes(int count)
