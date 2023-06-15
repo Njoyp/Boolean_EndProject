@@ -100,7 +100,7 @@ namespace EndProject.Backend.Repository
         {
             List<Recept> RandomRecipes = new List<Recept>();
             Random random = new Random();
-            var r = this.GetAllRecipes().ToList();
+            var r = this.GetAllRecipes().ToList(); //where recipe in recipe_chosen date_chosen != date from past 7 days
             for (int i = 0; i < count; i++)
             {
                 RandomRecipes.Add(r[random.Next(r.Count)]);
