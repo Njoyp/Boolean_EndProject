@@ -26,6 +26,18 @@ namespace EndProject.Backend.Repository
             }
         }
 
+        public Recept ChosenRecipe(int id)
+        {
+            using (var db = new RecipeContext())
+            {
+                var result = db.Recepten.Find(id);
+                result.Gekozen = DateTime.UtcNow;
+                db.Recepten.Update(result);
+                db.SaveChanges();
+                return result;
+            }
+        }
+
         public Ingredient DeleteIngredient(int id)
         {
             using (var db = new RecipeContext())
@@ -75,6 +87,11 @@ namespace EndProject.Backend.Repository
             }
         }
 
+        public IEnumerable<Recept> GetChosenRecipes()
+        {
+            throw new NotImplementedException();
+        }
+
         public Ingredient GetOneIngredient(int id) // except for when verwijderd != null 
         {
             Ingredient result;
@@ -100,12 +117,24 @@ namespace EndProject.Backend.Repository
         {
             List<Recept> RandomRecipes = new List<Recept>();
             Random random = new Random();
-            var r = this.GetAllRecipes().ToList(); //where recipe in recipe_chosen date_chosen != date from past 7 days
+            var r = this.GetAllRecipes().ToList(); //where recipe in recipe_chosen date_chosen != date from past 7 days && where Receptid is not already in there
             for (int i = 0; i < count; i++)
             {
                 RandomRecipes.Add(r[random.Next(r.Count)]);
             }
             return RandomRecipes;
+        }
+
+        public Recept ResetChosenRecipe(int id)
+        {
+            using (var db = new RecipeContext())
+            {
+                var result = db.Recepten.Find(id);
+                result.Gekozen = null;
+                db.Recepten.Update(result);
+                db.SaveChanges();
+                return result;
+            }
         }
 
         public Ingredient UpdateIngredient(Ingredient ingredient)

@@ -10,6 +10,7 @@ namespace EndProject.Backend.Models
         public int Tijd_min { get;set; }
         public string Stappen { get; set; }
         public DateTime? Verwijderd { get; set; }
+        public DateTime? Gekozen { get; set; }
 
         public IEnumerable<Ingredient> ingredienten { get; set; }
 

@@ -12,8 +12,25 @@ namespace EndProject.Backend.EndPoint
             app.MapGet("/Recepten", GetAllRecipes);
             app.MapGet("/Recepten/{id}", GetARecipe);
             app.MapGet("/Recepten/random/{count}", GetRandomRecipes);
+            app.MapGet("Recepenten/gekozen", GetChosenRecipes);
+            app.MapPut("/Recepten/Chosen/{id}", ConfirmRecipe);
             app.MapPut("/Recepten", UpdateRecipe);
             app.MapDelete("/Recepten/{id}", DeleteRecipe);
+            app.MapDelete("/Recepeten/RemoveChosen/{id}", RemoveChosenRecipe);
+        }
+
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        private static async Task<IResult> GetChosenRecipes(IRecipeRepository recipes)
+        {
+            try
+            {
+                return Results.Ok(recipes.GetChosenRecipes());
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -78,6 +95,21 @@ namespace EndProject.Backend.EndPoint
             }
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        private static async Task<IResult> ConfirmRecipe(int id, IRecipeRepository repository)
+        {
+            try
+            {
+            var r = repository.ChosenRecipe(id);
+                return r != null ? Results.Ok(r) : Results.NotFound("recipe not found");
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         private static async Task<IResult> UpdateRecipe(Recept recipe, IRecipeRepository repository)
@@ -100,6 +132,21 @@ namespace EndProject.Backend.EndPoint
             try
             {
                 var r = repository.DeleteRecipe(id);
+                return r != null ? Results.Ok(r) : Results.NotFound($"Couldn't find recipe with id: {id}");
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        private static async Task<IResult> RemoveChosenRecipe(int id, IRecipeRepository repository)
+        {
+            try
+            {
+                var r = repository.ResetChosenRecipe(id);
                 return r != null ? Results.Ok(r) : Results.NotFound($"Couldn't find recipe with id: {id}");
             }
             catch (Exception ex)

@@ -19,6 +19,10 @@ namespace EndProject.Backend.Repository
         Recept UpdateRecipe (Recept recept);
         Recept DeleteRecipe(int id);
 
+        Recept ChosenRecipe(int id);
+        IEnumerable<Recept> GetChosenRecipes();
+        Recept ResetChosenRecipe(int id);
+
         /*
          * Ingredients
          * create
@@ -32,5 +36,11 @@ namespace EndProject.Backend.Repository
         Ingredient GetOneIngredient(int id);
         Ingredient UpdateIngredient(Ingredient ingredient);
         Ingredient DeleteIngredient(int id);
+
+        /*
+        Ingredient BuyIngredient(int id);
+        IEnumerable<Ingredient> ShoppingList();
+        Ingredient RemoveIngredientFromShoppingList(int id);
+        */
     }
 }

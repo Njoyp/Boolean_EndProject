@@ -12,6 +12,8 @@ namespace EndProject.Backend.Models
         public string? Eenheid { get;set; }
         public DateTime? Verwijderd { get; set; } 
 
+        public bool? Kopen { get; set; }
+
         [ForeignKey("Recept")]
         public int Receptid { get; set; }
 

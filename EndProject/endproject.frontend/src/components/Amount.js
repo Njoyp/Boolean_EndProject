@@ -45,20 +45,29 @@ function Amount() {
                     {/*<input type="submit" value="Submit" />*/}
                 </label>
             </form>
+            <h3>
+                Random recipe name
+            </h3>
             <table>
                 <thead>
                     <tr>
                         <td>
-                    Random recipe name
+                        Name
+                        </td>
+                        <td>
+                        Tijd
                         </td>
                     </tr>
                 </thead>
                     <tbody>
                         {recipes.map(recipe => (
                             <tr key={recipe.Receptid}>
-                                <th scope="row"></th>
+                                
                                 <td>
                                     {recipe.naam}
+                                </td>
+                                <td>
+                                    {recipe.tijd_min }
                                 </td>
                                 <td>
                                     <button onClick={buttonHandler}>accept</button>
@@ -67,11 +76,12 @@ function Amount() {
                         ))}
                     </tbody>
             </table>
+            <h3>Selected recipes</h3>
             <table>
                 <thead>
                     <tr>
                         <td>
-                            Selected recipes
+                            
                         </td>
                     </tr>
                 </thead>
