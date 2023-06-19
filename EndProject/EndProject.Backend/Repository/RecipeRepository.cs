@@ -26,12 +26,28 @@ namespace EndProject.Backend.Repository
             }
         }
 
+        public IEnumerable<Ingredient> BuyIngredient(int recipeId) 
+        {
+            using(var db = new RecipeContext())
+            {
+                var ingredients = db.Ingredienten.Where(x => x.Receptid == recipeId).ToList();
+                foreach(var ingredient in ingredients)
+                {
+                    ingredient.Kopen = true;
+                    db.Ingredienten.Update(ingredient);
+                }
+                db.SaveChanges();
+                return ingredients;
+            }
+        }
+
         public Recept ChosenRecipe(int id)
         {
             using (var db = new RecipeContext())
             {
                 var result = db.Recepten.Find(id);
                 result.Gekozen = DateTime.UtcNow;
+                db.Ingredienten.Where(x => x.Receptid == id).ToList().ForEach(i => { i.Kopen = true; });
                 db.Recepten.Update(result);
                 db.SaveChanges();
                 return result;
@@ -46,7 +62,6 @@ namespace EndProject.Backend.Repository
                 if (ingredient != null)
                 {
                     ingredient.Verwijderd = DateTime.UtcNow;
-//                    db.Ingredients.Remove(ingredient);
                     db.SaveChanges();
                     return ingredient;
                 }
@@ -54,7 +69,7 @@ namespace EndProject.Backend.Repository
             }
         }
 
-        public Recept DeleteRecipe(int id) // when deleting a recipe also delete ingredient with that recipe_id
+        public Recept DeleteRecipe(int id) 
         {
             using (var db = new RecipeContext())
             {
@@ -71,11 +86,11 @@ namespace EndProject.Backend.Repository
             }
         }
 
-        public IEnumerable<Ingredient> GetAllIngredients() // except for the ones where verwijderd != null
+        public IEnumerable<Ingredient> GetAllIngredients() 
         {
             using (var db = new RecipeContext())
             {
-                  return db.Ingredienten.ToList(); 
+                  return db.Ingredienten.Where(i => i.Verwijderd == null).ToList(); 
             }
         }
 
@@ -89,17 +104,19 @@ namespace EndProject.Backend.Repository
 
         public IEnumerable<Recept> GetChosenRecipes()
         {
-            throw new NotImplementedException();
-        }
-
-        public Ingredient GetOneIngredient(int id) // except for when verwijderd != null 
-        {
-            Ingredient result;
             using (var db = new RecipeContext())
             {
-                result = db.Ingredienten.Find(id);    
+                var results = db.Recepten.Where(x => x.Gekozen != null).ToList();
+                return results;
             }
-            return result;
+        }
+
+        public IEnumerable<Ingredient> GetIngredientsRecipe(int RecipeId) 
+        {
+            using (var db = new RecipeContext())
+            {
+                return db.Ingredienten.Where(x => x.Receptid == RecipeId).Where(i => i.Verwijderd == null).ToList();    
+            }
         }
 
         public Recept GetOneRecipe(int id) 
@@ -120,9 +137,22 @@ namespace EndProject.Backend.Repository
             var r = this.GetAllRecipes().ToList(); //where recipe in recipe_chosen date_chosen != date from past 7 days && where Receptid is not already in there
             for (int i = 0; i < count; i++)
             {
-                RandomRecipes.Add(r[random.Next(r.Count)]);
+                RandomRecipes.Add(r[random.Next(r.Count)]); // when recipe is already in randomrecipes pick a different one
             }
             return RandomRecipes;
+        }
+
+        public Ingredient RemoveIngredientFromShoppingList(int id)
+        {
+            using (var db = new RecipeContext())
+            {
+                var result = db.Ingredienten.Find(id);
+                result.Kopen = false;
+                db.Ingredienten.Update(result);
+                db.SaveChanges();
+                return result;
+            }
+
         }
 
         public Recept ResetChosenRecipe(int id)
@@ -134,6 +164,15 @@ namespace EndProject.Backend.Repository
                 db.Recepten.Update(result);
                 db.SaveChanges();
                 return result;
+            }
+        }
+
+        public IEnumerable<Ingredient> ShoppingList()
+        {
+            using (var db = new RecipeContext())
+            {
+                var results = db.Ingredienten.Where(x => x.Kopen == true).ToList();
+                return results;
             }
         }
 

@@ -10,9 +10,12 @@ namespace EndProject.Backend.EndPoint
         {
             app.MapPost("/Ingredienten", PostIngredient);
             app.MapGet("/Ingredienten", GetAllIngredients);
-            app.MapGet("/Ingredienten/{id}", GetAIngredient);
+            app.MapGet("/Ingredienten/{RecipeId}", GetRecipeIngredients); 
+            app.MapGet("Ingredienten/Shoppinglist", GetShoppingList);
+            app.MapPut("/Ingredienten/{recipeId}", PrepareForShoppinglist);
             app.MapPut("/Ingredienten", UpdateIngredient);
             app.MapDelete("/Ingredienten/{id}", DeleteIngredient);
+            app.MapDelete("Ingredienten/Shoppinglist/{id}", RemoveFromShoppinglist);
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -45,16 +48,44 @@ namespace EndProject.Backend.EndPoint
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        private static async Task<IResult> GetAIngredient(int id, IRecipeRepository repository)
+        private static async Task<IResult> GetRecipeIngredients(int Recipeid, IRecipeRepository repository)
         {
             try
             {
                 return await Task.Run(() =>
                     {
-                        var ingredient = repository.GetOneIngredient(id);
-                        if (ingredient == null) return Results.NotFound();
+                        var ingredient = repository.GetIngredientsRecipe(Recipeid);
+                        if (ingredient == null) return Results.NotFound("Ingredients not found");
                         return Results.Ok(ingredient);
                     });
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        private static async Task<IResult> GetShoppingList(IRecipeRepository ingredients)
+        {
+            try
+            {
+                return Results.Ok(ingredients.ShoppingList());
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        private static async Task<IResult> PrepareForShoppinglist(int id, IRecipeRepository repository)
+        {
+            try
+            {
+                var i = repository.BuyIngredient(id);
+                return i != null ? Results.Ok(i) : Results.NotFound($"Couldn't find ingredient with id: {id}");
             }
             catch (Exception ex)
             {
@@ -85,6 +116,21 @@ namespace EndProject.Backend.EndPoint
             {
                 var i = repository.DeleteIngredient(id);
                 return i != null ? Results.Ok(i): Results.NotFound($"Couldn't find ingredient with id: {id}");
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        private static async Task<IResult> RemoveFromShoppinglist(int id, IRecipeRepository repository)
+        {
+            try
+            {
+                var i = repository.RemoveIngredientFromShoppingList(id);
+                return i != null ? Results.Ok(i) : Results.NotFound($"Couldn't find ingredient with id: {id}");
             }
             catch (Exception ex)
             {

@@ -12,16 +12,16 @@ namespace EndProject.Backend.EndPoint
             app.MapGet("/Recepten", GetAllRecipes);
             app.MapGet("/Recepten/{id}", GetARecipe);
             app.MapGet("/Recepten/random/{count}", GetRandomRecipes);
-            app.MapGet("Recepenten/gekozen", GetChosenRecipes);
+            app.MapGet("Recpenten/ChosenRecipes", GetAllChosenRecipes);
             app.MapPut("/Recepten/Chosen/{id}", ConfirmRecipe);
             app.MapPut("/Recepten", UpdateRecipe);
             app.MapDelete("/Recepten/{id}", DeleteRecipe);
-            app.MapDelete("/Recepeten/RemoveChosen/{id}", RemoveChosenRecipe);
+            app.MapDelete("/Recpeten/RemoveChosen/{id}", RemoveChosenRecipe);
         }
 
 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        private static async Task<IResult> GetChosenRecipes(IRecipeRepository recipes)
+        private static async Task<IResult> GetAllChosenRecipes(IRecipeRepository recipes)
         {
             try
             {

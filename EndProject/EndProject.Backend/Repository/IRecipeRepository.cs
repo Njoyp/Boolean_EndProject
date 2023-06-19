@@ -33,14 +33,14 @@ namespace EndProject.Backend.Repository
          */
         Ingredient AddIngredient (Ingredient ingredient);
         IEnumerable<Ingredient> GetAllIngredients();
-        Ingredient GetOneIngredient(int id);
+        IEnumerable<Ingredient> GetIngredientsRecipe(int RecipeId);
         Ingredient UpdateIngredient(Ingredient ingredient);
         Ingredient DeleteIngredient(int id);
 
-        /*
-        Ingredient BuyIngredient(int id);
+        
+        IEnumerable<Ingredient> BuyIngredient(int recipeId);
         IEnumerable<Ingredient> ShoppingList();
         Ingredient RemoveIngredientFromShoppingList(int id);
-        */
+        
     }
 }
