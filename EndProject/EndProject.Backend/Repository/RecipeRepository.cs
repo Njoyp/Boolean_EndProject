@@ -134,10 +134,12 @@ namespace EndProject.Backend.Repository
         {
             List<Recept> RandomRecipes = new List<Recept>();
             Random random = new Random();
-            var r = this.GetAllRecipes().ToList(); //where recipe in recipe_chosen date_chosen != date from past 7 days && where Receptid is not already in there
+            var r = this.GetAllRecipes().Where(x =>x.Gekozen == null).ToList(); 
             for (int i = 0; i < count; i++)
             {
-                RandomRecipes.Add(r[random.Next(r.Count)]); // when recipe is already in randomrecipes pick a different one
+                int x = random.Next(r.Count);
+                RandomRecipes.Add(r[x]); 
+                r.RemoveAt(x);
             }
             return RandomRecipes;
         }
@@ -167,7 +169,7 @@ namespace EndProject.Backend.Repository
             }
         }
 
-        public IEnumerable<Ingredient> ShoppingList()
+        public IEnumerable<Ingredient> ShoppingList() // for the same products groupby naam and add amount & unit??
         {
             using (var db = new RecipeContext())
             {
