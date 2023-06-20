@@ -12,11 +12,11 @@ namespace EndProject.Backend.EndPoint
             app.MapGet("/Recepten", GetAllRecipes);
             app.MapGet("/Recepten/{id}", GetARecipe);
             app.MapGet("/Recepten/random/{count}", GetRandomRecipes);
-            app.MapGet("Recpenten/ChosenRecipes", GetAllChosenRecipes);
+            app.MapGet("Recepten/ChosenRecipes", GetAllChosenRecipes);
             app.MapPut("/Recepten/Chosen/{id}", ConfirmRecipe);
             app.MapPut("/Recepten", UpdateRecipe);
             app.MapDelete("/Recepten/{id}", DeleteRecipe);
-            app.MapDelete("/Recpeten/RemoveChosen/{id}", RemoveChosenRecipe);
+            app.MapDelete("/Recepten/RemoveChosen/{id}", RemoveChosenRecipe);
         }
 
 

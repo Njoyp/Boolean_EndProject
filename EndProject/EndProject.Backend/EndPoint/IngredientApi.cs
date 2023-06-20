@@ -12,7 +12,7 @@ namespace EndProject.Backend.EndPoint
             app.MapGet("/Ingredienten", GetAllIngredients);
             app.MapGet("/Ingredienten/{RecipeId}", GetRecipeIngredients); 
             app.MapGet("Ingredienten/Shoppinglist", GetShoppingList);
-            app.MapPut("/Ingredienten/{recipeId}", PrepareForShoppinglist);
+            app.MapPut("/Ingredienten/{RecipeId}", PrepareForShoppinglist);
             app.MapPut("/Ingredienten", UpdateIngredient);
             app.MapDelete("/Ingredienten/{id}", DeleteIngredient);
             app.MapDelete("Ingredienten/Shoppinglist/{id}", RemoveFromShoppinglist);
@@ -80,12 +80,12 @@ namespace EndProject.Backend.EndPoint
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        private static async Task<IResult> PrepareForShoppinglist(int id, IRecipeRepository repository)
+        private static async Task<IResult> PrepareForShoppinglist(int RecipeId, IRecipeRepository repository)
         {
             try
             {
-                var i = repository.BuyIngredient(id);
-                return i != null ? Results.Ok(i) : Results.NotFound($"Couldn't find ingredient with id: {id}");
+                var i = repository.BuyIngredient(RecipeId);
+                return i != null ? Results.Ok(i) : Results.NotFound($"Couldn't find ingredient with id: {RecipeId}");
             }
             catch (Exception ex)
             {

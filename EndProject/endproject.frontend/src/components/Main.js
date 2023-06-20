@@ -4,9 +4,8 @@ function Main() {
     return (
         <div>
          <header className="App-header">
-       Recipe Randomizer
+                <h1>Recipe Randomizer</h1>
             </header>
-            {/*<AllRecipes/>*/}
             <Amount/>
         </div>
     )

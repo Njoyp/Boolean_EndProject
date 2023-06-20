@@ -174,6 +174,7 @@ namespace EndProject.Backend.Repository
             using (var db = new RecipeContext())
             {
                 var results = db.Ingredienten.Where(x => x.Kopen == true).ToList();
+                results.Sort((x, y) => string.Compare(x.Naam, y.Naam));
                 return results;
             }
         }

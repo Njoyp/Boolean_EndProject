@@ -1,13 +1,19 @@
 import { useState, useEffect } from 'react';
-
+import axios from 'axios';
 function Amount() {
     const [Amount, setAmount] = useState(0);
     const [recipes, setRecipes] = useState([]);
     const [selectedRecipes, setSelectedRecipes] = useState([]);
-
-    const handleChange = (event) => {
-        setAmount(event.target.value);
-    };
+    const [ingredients, setIngredients] = useState([]);
+    const buttonHandler = (receptid) => {
+        axios.put(`https://localhost:7289/Recepten/Chosen/${receptid}`)
+            .then((response) => {
+                setSelectedRecipes([...selectedRecipes, response.data]);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     useEffect(() => {
         if (Amount > 0) {
@@ -20,20 +26,31 @@ function Amount() {
         }
     }, [Amount]);
 
-    //const handleSubmit = (event) => {
-    //    event.preventDefault();
-    //    alert("You would like " + Amount + " recipes this week");
-    //};
-    const buttonHandler = (e) => {
-        console.log(e.target.value);
-        /*setSelectedRecipes(e.target.value)*/
-    }
+    useEffect(() => { 
+        fetch(`https://localhost:7289/Recepten/ChosenRecipes`)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    setSelectedRecipes(data);
+                });
+        
+    }, []);
+
+    useEffect(() => {
+        fetch(`https://localhost:7289/Ingredienten/Shoppinglist`)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setIngredients(data);
+            });
+
+    }, []);
     return (
         <>
-            <form /*onSubmit={handleSubmit}*/>
+            <form>
                 <label>
                     How many recipes do you want?
-                    <select value={Amount} onChange={handleChange}>
+                    <select value={Amount} onChange={(event) => { setAmount(event.target.value) }}>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -42,7 +59,6 @@ function Amount() {
                         <option value="6">6</option>
                         <option value="7">7</option>
                     </select>
-                    {/*<input type="submit" value="Submit" />*/}
                 </label>
             </form>
             <h3>
@@ -50,27 +66,23 @@ function Amount() {
             </h3>
             <table>
                 <thead>
-                    <tr>
-                        <td>
-                        Name
-                        </td>
-                        <td>
-                        Tijd
-                        </td>
+                    <tr> 
+                        {recipes.length > 0 && <th>Name</th>}
+                        {recipes.length > 0 && <th>Time</th>}
                     </tr>
                 </thead>
                     <tbody>
                         {recipes.map(recipe => (
-                            <tr key={recipe.Receptid}>
-                                
+                            <tr key={recipe.receptid}>  
                                 <td>
                                     {recipe.naam}
                                 </td>
                                 <td>
-                                    {recipe.tijd_min }
+                                    {recipe.tijd_min}
                                 </td>
                                 <td>
-                                    <button onClick={buttonHandler}>accept</button>
+                                    <button onClick={() => buttonHandler(recipe.receptid)}>accept</button>
+                                    
                                 </td>
                             </tr>
                         ))}
@@ -87,11 +99,33 @@ function Amount() {
                 </thead>
                 <tbody>
                     {selectedRecipes.map(srecipe => (
-                        <tr key={srecipe.Receptid}>
+                        <tr key={srecipe.receptid}>
                             <th scope="row"></th>
                             <td>
                                 {srecipe.naam}
                             </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <h3>Shopping list</h3>
+            <table>
+                <thead>
+                <tr>
+                    {ingredients.length > 0 && <th>Name</th>}
+                    {ingredients.length > 0 && <th>Amount</th>}
+                    {ingredients.length > 0 && <th>Unit</th>}
+                    </tr>
+                </thead>
+                <tbody>
+                    {ingredients.map(shopping => (
+                        <tr key = {shopping.id}> 
+                            <th scope="row"></th>
+                            <td>
+                                {shopping.naam }
+                            </td>
+                            <td> {shopping.hoeveelheid}</td>
+                            <td> {shopping.eenheid}</td>
                         </tr>
                     ))}
                 </tbody>
