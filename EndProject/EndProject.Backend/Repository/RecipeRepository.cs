@@ -161,12 +161,25 @@ namespace EndProject.Backend.Repository
         {
             using (var db = new RecipeContext())
             {
-                var result = db.Recepten.Find(id);
-                result.Gekozen = null;
-                db.Recepten.Update(result);
-                db.SaveChanges();
-                return result;
+                var results = db.Recepten.Include(r => r.ingredienten).ToList();
+                var recipe = results.SingleOrDefault(i => i.Receptid == id);
+                if (recipe != null)
+                {
+                    recipe.Gekozen = null;
+                    recipe.ingredienten.ToList().ForEach(i => { i.Kopen = false; });
+                    db.SaveChanges();
+                    return recipe;
+                }
+                return null;
             }
+            //using (var db = new RecipeContext())
+            //{
+            //    var result = db.Recepten.Find(id);
+            //    result.Gekozen = null;
+            //    db.Recepten.Update(result);
+            //    db.SaveChanges();
+            //    return result;
+            //}
         }
 
         public IEnumerable<Ingredient> ShoppingList() // for the same products groupby naam and add amount & unit??

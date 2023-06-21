@@ -15,12 +15,37 @@ function Amount() {
             });
     }
 
+    const detailButton = (receptid) => {
+
+    }
+
+    const crossOffButton = (receptid) => {
+        //const confirm = window.confirm(
+        //    `Are your sure you want to cross off ${receptid.naam}?`);
+        //if (confirm) {
+            axios.delete(`https://localhost:7289/Recepten/RemoveChosen/${receptid}`).then(() => {
+                setSelectedRecipes((prev) => [...prev.filter((r) => r.id !== receptid.id)]);    
+            });
+        /*}*/
+    }
+
+    const crossOffIngredient = (id) => {
+        //const confirm = window.confirm(
+        //    `Are your sure you want to cross off ${id.naam}?`);
+        //if (confirm) {
+            axios.delete(`https://localhost:7289/Ingredienten/Shoppinglist/${id}`).then(() => {
+                setIngredients((prev) => [...prev.filter((i) => i.id !== id.id)]);
+            });
+       /* }*/
+    }
+    
+
     useEffect(() => {
         if (Amount > 0) {
             fetch(`https://localhost:7289/Recepten/random/${Amount}`)
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
+                    /*console.log(data);*/
                     setRecipes(data);
                 });
         }
@@ -30,11 +55,11 @@ function Amount() {
         fetch(`https://localhost:7289/Recepten/ChosenRecipes`)
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
+                   /* console.log(data);*/
                     setSelectedRecipes(data);
                 });
         
-    }, []);
+    }, [selectedRecipes]);
 
     useEffect(() => {
         fetch(`https://localhost:7289/Ingredienten/Shoppinglist`)
@@ -44,7 +69,7 @@ function Amount() {
                 setIngredients(data);
             });
 
-    }, []);
+    }, [ingredients]);
     return (
         <>
             <form>
@@ -104,6 +129,12 @@ function Amount() {
                             <td>
                                 {srecipe.naam}
                             </td>
+                            <td>
+                                <button onClick={() => detailButton(srecipe.receptid)}>Details</button>
+                            </td>
+                            <td>
+                                <button onClick={() => crossOffButton(srecipe.receptid)}>Cross off</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -126,6 +157,9 @@ function Amount() {
                             </td>
                             <td> {shopping.hoeveelheid}</td>
                             <td> {shopping.eenheid}</td>
+                            <td>
+                                <button onClick={() => crossOffIngredient(shopping.id)}>Cross off</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
