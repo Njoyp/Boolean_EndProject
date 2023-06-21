@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+//import { Link } from "react-router-dom";
+//import { useNavigate } from '../../../node_modules/react-router-dom/dist/index';
+//import Recipe from './Recipe';
+
 function Amount() {
     const [Amount, setAmount] = useState(0);
     const [recipes, setRecipes] = useState([]);
@@ -10,14 +14,18 @@ function Amount() {
             .then((response) => {
                 setSelectedRecipes([...selectedRecipes, response.data]);
             })
+            .then(() => {
+                setRecipes((recipes) => recipes.filter((recipe) => recipe.receptid !== receptid));
+            })
             .catch((error) => {
                 console.error(error);
             });
     }
+/*    const navigate = useNavigate();*/
 
-    const detailButton = (receptid) => {
+    //const detailButton = (receptid) => {
 
-    }
+    //}
 
     const crossOffButton = (receptid) => {
         //const confirm = window.confirm(
@@ -65,7 +73,6 @@ function Amount() {
         fetch(`https://localhost:7289/Ingredienten/Shoppinglist`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setIngredients(data);
             });
 
@@ -130,7 +137,9 @@ function Amount() {
                                 {srecipe.naam}
                             </td>
                             <td>
-                                <button onClick={() => detailButton(srecipe.receptid)}>Details</button>
+                                {/*<Link to={`/recipe/${srecipe.receptid}`}>*/}
+                                <button>Details</button>
+                                {/*</Link>*/}
                             </td>
                             <td>
                                 <button onClick={() => crossOffButton(srecipe.receptid)}>Cross off</button>
