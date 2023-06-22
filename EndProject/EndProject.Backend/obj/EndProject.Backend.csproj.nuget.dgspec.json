@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nikit\\Desktop\\Boolean\\backend\\endproject\\EndProject\\EndProject.Backend\\EndProject.Backend.csproj": {}
+    "C:\\Users\\nikit\\Desktop\\Boolean\\Boolean_EndProject\\EndProject\\EndProject.Backend\\EndProject.Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nikit\\Desktop\\Boolean\\backend\\endproject\\EndProject\\EndProject.Backend\\EndProject.Backend.csproj": {
+    "C:\\Users\\nikit\\Desktop\\Boolean\\Boolean_EndProject\\EndProject\\EndProject.Backend\\EndProject.Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nikit\\Desktop\\Boolean\\backend\\endproject\\EndProject\\EndProject.Backend\\EndProject.Backend.csproj",
+        "projectUniqueName": "C:\\Users\\nikit\\Desktop\\Boolean\\Boolean_EndProject\\EndProject\\EndProject.Backend\\EndProject.Backend.csproj",
         "projectName": "EndProject.Backend",
-        "projectPath": "C:\\Users\\nikit\\Desktop\\Boolean\\backend\\endproject\\EndProject\\EndProject.Backend\\EndProject.Backend.csproj",
+        "projectPath": "C:\\Users\\nikit\\Desktop\\Boolean\\Boolean_EndProject\\EndProject\\EndProject.Backend\\EndProject.Backend.csproj",
         "packagesPath": "C:\\Users\\nikit\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nikit\\Desktop\\Boolean\\backend\\endproject\\EndProject\\EndProject.Backend\\obj\\",
+        "outputPath": "C:\\Users\\nikit\\Desktop\\Boolean\\Boolean_EndProject\\EndProject\\EndProject.Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nikit\\AppData\\Roaming\\NuGet\\NuGet.Config",
