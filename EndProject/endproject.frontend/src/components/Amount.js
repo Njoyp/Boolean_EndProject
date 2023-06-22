@@ -185,6 +185,9 @@ function Amount() {
             <p>{singleRecipe.stappen}</p>
             <table>
                 <thead>
+                    <tr>{singleRecipe.ingredienten && singleRecipe.ingredienten.length > 0 && <th>Name</th>}
+                    {singleRecipe.ingredienten && singleRecipe.ingredienten.length > 0 && <th>Amount</th>}
+                    {singleRecipe.ingredienten && singleRecipe.ingredienten.length > 0 && <th>Unit</th>}</tr>
 
                 </thead>
                 <tbody>
