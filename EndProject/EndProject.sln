@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "endproject.frontend", "endproject.frontend\endproject.frontend.esproj", "{D6912CC4-B420-4E89-BA84-E730E9FA2585}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "pagesfrontend", "pagesfrontend\pagesfrontend.esproj", "{F5077483-C6E9-4EFA-9714-E74F698D5684}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,12 @@ Global
 		{D6912CC4-B420-4E89-BA84-E730E9FA2585}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6912CC4-B420-4E89-BA84-E730E9FA2585}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D6912CC4-B420-4E89-BA84-E730E9FA2585}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F5077483-C6E9-4EFA-9714-E74F698D5684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5077483-C6E9-4EFA-9714-E74F698D5684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5077483-C6E9-4EFA-9714-E74F698D5684}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F5077483-C6E9-4EFA-9714-E74F698D5684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5077483-C6E9-4EFA-9714-E74F698D5684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5077483-C6E9-4EFA-9714-E74F698D5684}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
