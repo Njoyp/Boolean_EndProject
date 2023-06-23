@@ -1,24 +1,25 @@
-import logo from './logo.svg';
+/*import logo from './logo.svg';*/
+import { Routes, Route } from "react-router-dom";
 import './App.css';
+import AllRecipes from "./Components/AllRecipes";
+import Main from './Components/Main';
+import Menu from "./Components/Menu";
+import Recipe from "./Components/Recipe";
+import SelectedRecipes from "./Components/SelectedRecipes";
+import Shoppinglist from "./Components/Shoppinglist";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <>
+          <Routes>
+              <Route index element={<Main />} />
+              {/*<Route path="/" element={<Menu />} />*/}
+              <Route path="/allrecipes" element={<AllRecipes />} />
+              <Route path="/recipe:id" element={<Recipe />} />
+              <Route path="/selectedrecipes" element={<SelectedRecipes />} />
+              <Route path="/shoppinglist" element={<Shoppinglist/> }/>
+          </Routes>
+      </>
   );
 }
 

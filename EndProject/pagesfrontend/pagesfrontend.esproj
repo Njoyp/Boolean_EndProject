@@ -12,7 +12,13 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\build</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\NewFolder1\" />
-    <Folder Include="src\NewFolder\" />
+    <TypeScriptConfiguration Remove="src\NewFolder1\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\NewFolder1\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\Components\" />
+    <Folder Include="src\Styling\" />
   </ItemGroup>
 </Project>
