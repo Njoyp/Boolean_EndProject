@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import './App.css';
 import AllRecipes from "./Components/AllRecipes";
 import Main from './Components/Main';
-import Menu from "./Components/Menu";
+/*import Menu from "./Components/Menu";*/
 import Recipe from "./Components/Recipe";
 import SelectedRecipes from "./Components/SelectedRecipes";
 import Shoppinglist from "./Components/Shoppinglist";

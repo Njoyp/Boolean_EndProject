@@ -94,10 +94,10 @@ namespace EndProject.Backend.Repository
             }
         }
 
-        public IEnumerable<Recept> GetAllRecipes()
+        public IEnumerable<Recept> GetAllRecipes() //order ingredienten by name
         {
             using (var db = new RecipeContext())
-            {
+            { 
                 return db.Recepten.Include(r => r.ingredienten).Where(r =>r.Verwijderd == null).ToList();
             }
         }

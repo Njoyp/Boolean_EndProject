@@ -14,7 +14,7 @@ function Menu() {
                             <Link className="menuLink" to="/allrecipes">All recipes</Link>
                     </li>
                     <li>
-                            <Link className="menuLink"  to="/selectedrecipes">Selecte recipes</Link>
+                            <Link className="menuLink"  to="/selectedrecipes">Selected recipes</Link>
                     </li>
                     <li>
                             <Link className="menuLink"  to="/shoppinglist">Shopping list</Link>
