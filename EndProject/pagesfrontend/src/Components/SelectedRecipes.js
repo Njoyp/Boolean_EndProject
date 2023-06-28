@@ -1,10 +1,12 @@
 import Menu from "./Menu";
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function SelectedRecipes() {
     const [selectedRecipes, setSelectedRecipes] = useState([]);
     const [singleRecipe, setSingleRecipe] = useState({})
+
 
     const crossOffButton = (receptid) => {
         //const confirm = window.confirm(
@@ -17,11 +19,14 @@ function SelectedRecipes() {
     }
 
     const detailButton = (receptid) => {
-        fetch(`https://localhost:7289/Recepten/${receptid}`)
+        
+        fetch(`https://localhost:7289/recepten/${receptid}`)
             .then((res) => res.json())
             .then((data) => {
                 console.log(data)
+                console.log(receptid)
                 setSingleRecipe(data);
+                window.location.href = `/recipe/${receptid}`;
             });
     }
 
@@ -55,9 +60,9 @@ function SelectedRecipes() {
                                 {srecipe.naam}
                             </td>
                             <td>
-                                {/*<Link to={`/recipe/${srecipe.receptid}`}>*/}
+                                {/*<Link to={`/recipe/${srecipe.receptid}`}> Details </Link>*/}
                                 <button onClick={() => detailButton(srecipe.receptid)}>Details</button>
-                                {/*</Link>*/}
+                               
                             </td>
                             <td>
                                 <button onClick={() => crossOffButton(srecipe.receptid)}>Cross off</button>
