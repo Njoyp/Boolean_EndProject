@@ -1,8 +1,23 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function Randomizer() {
     const [Amount, setAmount] = useState(0);
     const [recipes, setRecipes] = useState([]);
+    const [selectedRecipes, setSelectedRecipes] = useState([]);
+
+    const buttonHandler = (receptid) => {
+        axios.put(`https://localhost:7289/Recepten/Chosen/${receptid}`)
+            .then((response) => {
+                setSelectedRecipes([...selectedRecipes, response.data]);
+            })
+            .then(() => {
+                setRecipes((recipes) => recipes.filter((recipe) => recipe.receptid !== receptid));
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
     useEffect(() => {
         if (Amount > 0) {
@@ -32,7 +47,7 @@ function Randomizer() {
             </form>
             <table>
                 <thead>
-                    <tr>
+                    <tr> 
                         {recipes.length > 0 && <th>Name</th>}
                         {recipes.length > 0 && <th>Time</th>}
                     </tr>
@@ -46,10 +61,10 @@ function Randomizer() {
                             <td>
                                 {recipe.tijd_min}
                             </td>
-                            {/*<td>*/}
-                            {/*    <button onClick={() => buttonHandler(recipe.receptid)}>accept</button>*/}
+                            <td>
+                                <button onClick={() => buttonHandler(recipe.receptid)}>accept</button>
 
-                            {/*</td>*/}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
