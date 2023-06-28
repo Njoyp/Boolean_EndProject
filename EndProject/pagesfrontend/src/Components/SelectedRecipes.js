@@ -23,8 +23,8 @@ function SelectedRecipes() {
         fetch(`https://localhost:7289/recepten/${receptid}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
-                console.log(receptid)
+                //console.log(data)
+                //console.log(receptid)
                 setSingleRecipe(data);
                 window.location.href = `/recipe/${receptid}`;
             });

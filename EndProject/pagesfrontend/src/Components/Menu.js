@@ -6,9 +6,9 @@ function Menu() {
             <div className="topMenu">
             <h3>Menu</h3>
             <nav>
-                <ul>
+                <ul className="menuItems">
                     <li>
-                    <Link className="menuLink" to="/">Home</Link>
+                            <Link className="menuLink" to="/">Home</Link>
                     </li>
                     <li>
                             <Link className="menuLink" to="/allrecipes">All recipes</Link>

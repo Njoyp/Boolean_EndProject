@@ -1,5 +1,6 @@
 import Menu from "./Menu";
 import { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 
 function AllRecipes() {
@@ -49,7 +50,7 @@ function AllRecipes() {
                          {recipes.length > 0 && <th>Name</th>}
                          {recipes.length > 0 && <th>Time</th>}
                          {recipes.length > 0 && <th>Steps</th>}
-                         {recipes.ingredienten && recipes.ingredienten.length > 0 && <th>Ingredients</th>}
+                         {recipes.length > 0 && <th>Ingredients</th>}
                      </tr>
                  </thead>
                  <tbody>
